@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'App.apps.AppConfig',
-
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -171,6 +171,14 @@ REST_FRAMEWORK = {
         'rest_framework.filters.OrderingFilter',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
 
 SECRET_KEY = 'your_secret_key'

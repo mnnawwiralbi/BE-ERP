@@ -7,7 +7,7 @@ from rest_framework.pagination import LimitOffsetPagination
 from App.Serelizer.janjiserializer import JanjiSerializer
 
 
-class Janji (generics.ListCreateAPIView):
+class DetailPembuatJanjiView (generics.ListCreateAPIView):
     queryset = DetailPembuatJanji.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     pagination_class = LimitOffsetPagination
@@ -35,7 +35,7 @@ class Janji (generics.ListCreateAPIView):
             return Response(response)
 
 
-class JanjiUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+class DetailPembuatJanjiUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     queryset = DetailPembuatJanji.objects.all()
     serializer_class = JanjiSerializer
     pagination_class = LimitOffsetPagination
