@@ -20,9 +20,12 @@ from django.views.generic.base import RedirectView
 from App import urls
 from django.conf.urls.static import static
 from django.conf import settings
+from django.http import Http404
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/admin/', permanent=True)),
     path('admin/', admin.site.urls),
     path('api/', include(urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'App.views.handler404'
