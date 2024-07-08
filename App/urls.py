@@ -1,12 +1,13 @@
 from django.urls import path
 from App.Api.article import article, ArticleUpdateDelete
-from App.Api.register import register
-from App.Api.auth import authis, LoginSimpleJwtTokenObtain, LoginSimpleJwtRefreshToken
+from App.Api.register import register, RegisterView
+from App.Api.auth import authis, LoginSimpleJwtTokenObtain, LoginSimpleJwtRefreshToken, AuthSerializerFormEmail, AuthSerializerFormUsername
 from App.Api.banner import BannerView, BannerUpdateDelete
 from App.Api.service import ServiceView
 from App.Api.janji import DetailPembuatJanjiView, DetailPembuatJanjiUpdateDelete
 from App.Api.review import ReviewView, ReviewUpdateDelete
 from App.Api.service import ServiceUpdateDelete, ServiceView
+from App.Api.logout import LogoutView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -26,8 +27,8 @@ urlpatterns = [
          DetailPembuatJanjiUpdateDelete.as_view()),
     path('review/', ReviewView.as_view()),
     path('reviewupdate/<str:slug>/', ReviewUpdateDelete.as_view()),
-    path('register/', register.as_view()),
-    path('auth/', LoginSimpleJwtRefreshToken.as_view()),
+    path('register/', RegisterView.as_view()),
+    path('auth/', AuthSerializerFormEmail.as_view()),
     path('logout/', LogoutView.as_view()),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh')

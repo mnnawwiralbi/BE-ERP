@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--+(y7ugtpfxqf^mykw1svuzx35k*x^)&x*=*4tx4)3_vxd&pj('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -38,6 +38,16 @@ REST_FRAMEWORK = {
     ]
 }
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "postgres",
+#         "USER": "konohagakure",
+#         "PASSWORD": "1234",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
 
 # Application definition
 
@@ -56,6 +66,7 @@ INSTALLED_APPS = [
     'App.apps.AppConfig',
     'rest_framework_simplejwt',
     'Websocket.apps.WebsocketConfig',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -185,19 +196,19 @@ REST_FRAMEWORK = {
     ],
 }
 
-SECRET_KEY = 'your_secret_key'
+# SECRET_KEY = 'your_secret_key'
 
-JWT_ALGORITHM = 'HS256'
+# JWT_ALGORITHM = 'HS256'
 
-JWT_EXP_DELTA_SECONDS = 300  # 5 menit
+# JWT_EXP_DELTA_SECONDS = 300  # 5 menit
 
-JWT_ACCESS_TOKEN_LIFETIME = datetime.timedelta(minutes=5)
+# JWT_ACCESS_TOKEN_LIFETIME = datetime.timedelta(minutes=5)
 
-JWT_REFRESH_TOKEN_LIFETIME = datetime.timedelta(days=1)
+# JWT_REFRESH_TOKEN_LIFETIME = datetime.timedelta(days=1)
 
-APPEND_SLASH = False
+# APPEND_SLASH = False
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
 
 # konfigurasi direktori media
 
@@ -206,3 +217,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Media/')  # Lokasi Disistem
 MEDIA_URL = '/media/'
 
 ASGI_APPLICATION = 'Public.asgi.application'
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+}

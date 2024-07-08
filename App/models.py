@@ -34,7 +34,7 @@ def upload_banners(instance, filename):
 def upload_reviews(instance, filename):
     ext = filename.split('.')[-1]
     name = '{:%Y%m%d_%H%M%S}_{}'.format(datetime.now(), instance.name)
-    return 'banners/{}.{}'.format(name, ext)
+    return 'reviews/{}.{}'.format(name, ext)
 
 
 # Services Model
@@ -244,8 +244,7 @@ class DetailPembuatJanji(models.Model):
         ('online', 'Online'),
         ('offline', 'Offline'),
     )
-    admin = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name='admin')
+
     id = models.BigAutoField(primary_key=True)
     perusahaan = models.CharField(max_length=225, blank=False, null=False,
                                   verbose_name='Nama Perusahaan')
@@ -261,6 +260,9 @@ class DetailPembuatJanji(models.Model):
         max_length=225, choices=options, blank=False, null=False)
     alamat_meeting = models.CharField(max_length=225, blank=False, null=False,
                                       verbose_name='Alamat Meeting')
+
+    rencana_tanggal = models.DateTimeField(null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

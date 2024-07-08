@@ -5,13 +5,13 @@ from rest_framework.views import APIView
 from django.contrib.auth import authenticate
 from App.utils.tokenjwt import create_access_token, create_refresh_token
 from rest_framework import status
-from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenObtainSerializer
 from App.Serelizer.accountserelizer import AccountSerializer
+from App.Serelizer.authserializer import AuthFormSerializerEmail, AuthFormSerializerUsername
 
 
 class AuthUsername (APIView):
@@ -193,3 +193,25 @@ class LoginSimpleJwtRefreshToken(APIView):
 
             except User.DoesNotExist:
                 return Response({'message': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AuthSerializerFormEmail(APIView):
+    serializer_class = AuthFormSerializerEmail
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            return Response(serializer.validated_data)
+        return Response(serializer.errors, status=400)
+
+
+class AuthSerializerFormUsername(APIView):
+    serializer_class = AuthFormSerializerUsername
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            return Response(serializer.validated_data)
+        return Response(serializer.errors, status=400)
